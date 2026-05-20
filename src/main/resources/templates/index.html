@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hannah Nana Yaa Sarfo Darko | Portfolio</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap"
+          rel="stylesheet"/>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+    <div class="hero-image">
+        <img th:src="@{/profile.jpg}" alt="Hannah Darko"/>
+        <div class="hero-image-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+
+        <p class="hero-greeting">Hello, I'm</p>
+
+        <h1>
+            Hannah<br/>
+            Nana Yaa<br/>
+            <span>Sarfo Darko</span>
+        </h1>
+
+        <h2>Junior Software Developer</h2>
+
+        <p class="hero-tagline">
+            Building clean, scalable applications<br/>
+            that make a real impact.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="#contact" class="btn-primary">Get In Touch</a>
+            <a href="#projects" class="btn-secondary">View My Work</a>
+        </div>
+
+        <div class="hero-socials">
+
+            <a th:href="${about.linkedInUrl}"
+               target="_blank">
+                LinkedIn
+            </a>
+
+            <span>·</span>
+
+            <span th:each="github, iterStat : ${about.githubUrl}">
+
+                <a th:href="${github}"
+                   target="_blank"
+                   th:text="'GitHub ' + ${iterStat.index + 1}">
+                </a>
+
+                <span th:if="${!iterStat.last}">
+                    ·
+                </span>
+
+            </span>
+
+            <span>·</span>
+
+            <a th:href="'mailto:' + ${about.email}">
+                Email
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+
+    <div class="about-text">
+
+        <p class="section-label">Who I Am</p>
+
+        <h2>About Me</h2>
+
+        <p th:text="${about.bio}" class="about-bio"></p>
+
+        <div class="skills">
+
+            <h3>Skills</h3>
+
+            <div class="skills-list">
+
+                <span th:each="skill : ${about.skills}"
+                      th:text="${skill}"
+                      class="skill-tag">
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="about-image">
+        <img th:src="@{/profile.jpg}" alt="Hannah Darko"/>
+    </div>
+
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+
+    <div class="section-header">
+        <p class="section-label">What I've Built</p>
+        <h2>Projects</h2>
+    </div>
+
+    <div class="projects-grid">
+
+        <div th:each="project : ${projects}" class="project-card">
+
+            <div class="project-number">01</div>
+
+            <h3 th:text="${project.title}"></h3>
+
+            <p th:text="${project.description}"></p>
+
+            <div class="tech-stack">
+
+                <span th:each="tech : ${project.techStack}"
+                      th:text="${tech}"
+                      class="tech-tag">
+                </span>
+
+            </div>
+
+            <div class="project-links">
+
+                <a th:href="${project.githubUrl}"
+                   th:if="${project.githubUrl != ''}"
+                   target="_blank"
+                   class="project-link">
+                    GitHub ↗
+                </a>
+
+                <a th:href="${project.liveUrl}"
+                   th:if="${project.liveUrl != ''}"
+                   target="_blank"
+                   class="project-link">
+                    Live ↗
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+
+    <div class="section-header">
+        <p class="section-label">Where I've Worked</p>
+        <h2>Experience</h2>
+    </div>
+
+    <div class="experience-timeline">
+
+        <div th:each="exp : ${experience}" class="experience-item">
+
+            <div class="exp-date-col">
+
+                <span class="exp-year"
+                      th:text="${exp.startDate}">
+                </span>
+
+                <span class="exp-dash">—</span>
+
+                <span class="exp-year"
+                      th:text="${exp.endDate}">
+                </span>
+
+            </div>
+
+            <div class="exp-line"></div>
+
+            <div class="exp-content">
+
+                <h3 th:text="${exp.role}"></h3>
+
+                <h4 th:text="${exp.company}"></h4>
+
+                <p th:text="${exp.description}"></p>
+
+                <div class="tech-stack">
+
+                    <span th:each="tech : ${exp.techStack}"
+                          th:text="${tech}"
+                          class="tech-tag">
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+
+    <p class="section-label">Let's Talk</p>
+
+    <h2>Get In Touch</h2>
+
+    <p class="contact-sub">
+        Open to opportunities, collaborations, and conversations.
+    </p>
+
+    <!-- SOCIAL LINKS -->
+    <div class="contact-links">
+
+        <a th:href="'mailto:' + ${about.email}"
+           class="contact-btn">
+            📧 Email Me
+        </a>
+
+        <a th:href="${about.linkedInUrl}"
+           target="_blank"
+           class="contact-btn">
+            💼 LinkedIn
+        </a>
+
+        <a th:each="github, iterStat : ${about.githubUrl}"
+           th:href="${github}"
+           target="_blank"
+           class="contact-btn"
+           th:text="'🐙 GitHub ' + ${iterStat.index + 1}">
+        </a>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 Hannah Nana Yaa Sarfo Darko. All rights reserved.</p>
+</footer>
+
+</body>
+
+</html>
